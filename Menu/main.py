@@ -17,12 +17,16 @@ screen_height = 1080
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Retro Game Console')
 
+# Cargar la imagen de fondo
+background_image = pygame.image.load('./menu/images menu/background2.png')  # Cargar el fondo
+background_image = pygame.transform.scale(background_image, (screen_width, screen_height))  # Ajustar tamaño
+
 # Cargar las miniaturas de los juegos
 game_images = [
-    pygame.image.load('./frogger/images/sprite_sheets_up.png'),  # Miniatura de Juego 1
-    pygame.image.load('./images/game2.png'),  # Miniatura de Juego 2 (cambia según tus imágenes)
-    pygame.image.load('./images/game3.png'),  # Miniatura de Juego 3
-    pygame.image.load('./images/game4.png')   # Miniatura de Juego 4
+    pygame.image.load('./menu/images menu/frogger.jpg'),  # Miniatura de Juego 1
+    pygame.image.load('./menu/images menu/DonkeyKong.jpg'),  # Miniatura de Juego 2
+    pygame.image.load('./menu/images menu/Tetris.jpg'),  # Miniatura de Juego 3
+    pygame.image.load('./menu/images menu/xevious.png')   # Miniatura de Juego 4
 ]
 
 # Ajustar tamaño de las imágenes de los juegos
@@ -30,17 +34,31 @@ game_images = [pygame.transform.scale(img, (200, 200)) for img in game_images]
 
 # Fuente para el texto
 font = pygame.font.SysFont('Arial', 50)
+description_font = pygame.font.SysFont('Arial', 30)
 
 # Índice de juego seleccionado
 selected_index = 0
 
+# Descripciones de los juegos
+game_descriptions = [
+    "Frogger 1998\nTwo-Players\nClassic arcade action\nNavigate the frog across the road and river.",
+    "Donkey Kong 1981\nOne-Player\nClassic arcade platformer\nHelp Mario rescue Pauline from Donkey Kong!",
+    "Tetris 1984\nSingle-Player\nClassic puzzle game\nFit falling blocks to complete lines and clear the board!",
+    "Xevious 1982\nSingle-Player\nVertically scrolling shooter\nDestroy enemies and avoid obstacles in this classic arcade shooter."
+]
+
+# Variable para manejar el "debounce" de teclas
+last_key_time = 0
+key_delay = 300  # 300 ms de retraso entre presionar teclas
+
 # Función para dibujar el menú
 def draw_menu():
-    screen.fill(BLACK)
+    # Dibujar el fondo
+    screen.blit(background_image, (0, 0))
 
     # Título
-    title_text = font.render('SELECT GAME', True, GREEN)
-    screen.blit(title_text, (screen_width // 2 - title_text.get_width() // 2, 100))
+    title_text = font.render('SELECT GAME', True, RED)
+    screen.blit(title_text, (screen_width // 2 - title_text.get_width() // 2, 180))
 
     # Mostrar las miniaturas de los juegos
     for i, img in enumerate(game_images):
@@ -49,9 +67,16 @@ def draw_menu():
 
         # Dibujar el cuadro alrededor del juego seleccionado
         if i == selected_index:
-            pygame.draw.rect(screen, GREEN, (x_position - 10, y_position - 10, 220, 220), 5)
+            pygame.draw.rect(screen, RED, (x_position - 10, y_position - 10, 220, 220), 5)
 
         screen.blit(img, (x_position, y_position))
+
+    # Mostrar la descripción del juego seleccionado
+    description_text = game_descriptions[selected_index]
+    description_lines = description_text.split("\n")
+    for i, line in enumerate(description_lines):
+        text_surface = description_font.render(line, True, WHITE)
+        screen.blit(text_surface, (screen_width // 2 - text_surface.get_width() // 2, 550 + i * 40))
 
     # Instrucciones
     instructions_text = font.render('Use Arrow Keys to select', True, BLUE)
@@ -61,21 +86,26 @@ def draw_menu():
 
 # Función para manejar la entrada del usuario
 def handle_input():
-    global selected_index
+    global selected_index, last_key_time
     keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_LEFT]:
-        selected_index = (selected_index - 1) % len(game_images)
-    elif keys[pygame.K_RIGHT]:
-        selected_index = (selected_index + 1) % len(game_images)
-    elif keys[pygame.K_RETURN]:
-        print(f"Game {selected_index + 1} selected")
-        # Aquí puedes poner el código para iniciar el juego seleccionado
+    # Comprobar si han pasado suficientes milisegundos entre las teclas
+    current_time = pygame.time.get_ticks()
+    if current_time - last_key_time > key_delay:
+        if keys[pygame.K_LEFT]:
+            selected_index = (selected_index - 1) % len(game_images)
+            last_key_time = current_time  # Actualiza el tiempo de la última tecla presionada
+        elif keys[pygame.K_RIGHT]:
+            selected_index = (selected_index + 1) % len(game_images)
+            last_key_time = current_time  # Actualiza el tiempo de la última tecla presionada
+        elif keys[pygame.K_RETURN]:
+            print(f"Game {selected_index + 1} selected")
+            # Aquí puedes poner el código para iniciar el juego seleccionado
 
 # Ciclo principal
 def main():
     clock = pygame.time.Clock()
-    
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
