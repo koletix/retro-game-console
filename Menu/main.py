@@ -1,5 +1,7 @@
 import pygame
 import sys
+import subprocess
+import os
 
 # Inicialización de Pygame
 pygame.init()
@@ -100,7 +102,24 @@ def handle_input():
             last_key_time = current_time  # Actualiza el tiempo de la última tecla presionada
         elif keys[pygame.K_RETURN]:
             print(f"Game {selected_index + 1} selected")
-            # Aquí puedes poner el código para iniciar el juego seleccionado
+            # Ejecutar el juego seleccionado (por ejemplo, Frogger)
+            if selected_index == 0:
+                # Usar la ruta correcta para el archivo frogger.py
+                game_path = os.path.join(os.path.dirname(__file__), '..', 'frogger', 'frogger.py')  # Ajuste aquí
+                subprocess.Popen(['python', game_path])  # Ejecutar el juego de Frogger
+            elif selected_index == 1:
+                print("Donkey Kong selected")
+                # Agregar ejecución para Donkey Kong
+            elif selected_index == 2:
+                print("Tetris selected")
+                # Agregar ejecución para Tetris
+            elif selected_index == 3:
+                print("Xevious selected")
+                # Agregar ejecución para Xevious
+
+            # Cerrar el menú después de seleccionar el juego
+            pygame.quit()
+            sys.exit()
 
 # Ciclo principal
 def main():
