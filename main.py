@@ -17,10 +17,14 @@ screen_height = 1080
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Retro Game Console')
 
+# Cargar la imagen de fondo
+background_image = pygame.image.load('./menu/images menu/background2.png')  # Cargar el fondo
+background_image = pygame.transform.scale(background_image, (screen_width, screen_height))  # Ajustar tamaño
+
 # Cargar las miniaturas de los juegos
 game_images = [
     pygame.image.load('./menu/images menu/frogger.jpg'),  # Miniatura de Juego 1
-    pygame.image.load('./menu/images menu/DonkeyKong.jpg'),  # Miniatura de Juego 2 (ajusta las rutas)
+    pygame.image.load('./menu/images menu/DonkeyKong.jpg'),  # Miniatura de Juego 2
     pygame.image.load('./menu/images menu/Tetris.jpg'),  # Miniatura de Juego 3
     pygame.image.load('./menu/images menu/frogger.jpg')   # Miniatura de Juego 4
 ]
@@ -49,11 +53,12 @@ key_delay = 300  # 300 ms de retraso entre presionar teclas
 
 # Función para dibujar el menú
 def draw_menu():
-    screen.fill(BLACK)
+    # Dibujar el fondo
+    screen.blit(background_image, (0, 0))
 
     # Título
-    title_text = font.render('SELECT GAME', True, GREEN)
-    screen.blit(title_text, (screen_width // 2 - title_text.get_width() // 2, 100))
+    title_text = font.render('SELECT GAME', True, RED)
+    screen.blit(title_text, (screen_width // 2 - title_text.get_width() // 2, 180))
 
     # Mostrar las miniaturas de los juegos
     for i, img in enumerate(game_images):
@@ -62,7 +67,7 @@ def draw_menu():
 
         # Dibujar el cuadro alrededor del juego seleccionado
         if i == selected_index:
-            pygame.draw.rect(screen, GREEN, (x_position - 10, y_position - 10, 220, 220), 5)
+            pygame.draw.rect(screen, RED, (x_position - 10, y_position - 10, 220, 220), 5)
 
         screen.blit(img, (x_position, y_position))
 
