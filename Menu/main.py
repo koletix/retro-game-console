@@ -28,7 +28,7 @@ game_images = [
     pygame.image.load('./menu/images menu/frogger.jpg'),  # Miniatura de Juego 1
     pygame.image.load('./menu/images menu/DonkeyKong.jpg'),  # Miniatura de Juego 2
     pygame.image.load('./menu/images menu/Tetris.jpg'),  # Miniatura de Juego 3
-    pygame.image.load('./menu/images menu/816.png')   # Miniatura de Juego 4
+    pygame.image.load('./menu/images menu/Contra.jpg')   # Miniatura de Juego 4
 ]
 
 # Ajustar tamaño de las imágenes de los juegos
