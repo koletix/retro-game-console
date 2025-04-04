@@ -43,7 +43,7 @@ selected_index = 0
 
 # Descripciones de los juegos
 game_descriptions = [
-    "Frogger 1998\nTwo-Players\nClassic arcade action\nNavigate the frog across the road and river.",
+    "Frogger 1998\nOne-Player\nClassic arcade action\nNavigate the frog across the road and river.",
     "Donkey Kong 1981\nOne-Player\nClassic arcade platformer\nHelp Mario rescue Pauline from Donkey Kong!",
     "Tetris 1984\nSingle-Player\nClassic puzzle game\nFit falling blocks to complete lines and clear the board!",
     "Xevious 1982\nSingle-Player\nVertically scrolling shooter\nDestroy enemies and avoid obstacles in this classic arcade shooter."
