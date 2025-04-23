@@ -108,6 +108,8 @@ def handle_input():
                 game_path = os.path.join(os.path.dirname(__file__), '..', 'frogger', 'frogger.py')  # Ajuste aquí
                 subprocess.Popen(['python', game_path])  # Ejecutar el juego de Frogger
             elif selected_index == 1:
+                game_path = os.path.join(os.path.dirname(__file__), '..', 'Donkey Kong', 'game_mk.py')  # Ajuste aquí
+                subprocess.Popen(['python', game_path])  # Ejecutar el juego de Frogger
                 print("Donkey Kong selected")
                 # Agregar ejecución para Donkey Kong
             elif selected_index == 2:
@@ -140,4 +142,3 @@ def main():
 # Iniciar el juego
 if __name__ == '__main__':
     main()
-
